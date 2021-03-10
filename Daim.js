@@ -31,7 +31,8 @@ class Daim{
   monitorMouse(){
     let eg = this;
     this.mousePressed = false;
-    this.mousePos = {x: 0, y: 0};
+    this.mouseX = 0;
+    this.mouseY = 0;
     document.addEventListener("mousedown", (event) => {eg.mouseDownOriginal(event)});
     document.addEventListener("mouseup", (event) => {eg.mouseUpOriginal(event)});
     document.addEventListener("mousemove", (event) => {eg.mouseMoveOriginal(event)});
@@ -212,7 +213,8 @@ class Daim{
     if(this.mouseUp) this.mouseUp(e);
   }
   mouseMoveOriginal(e){
-    this.mousePos = {x: e.pageX-this.canvas.offsetLeft, y: e.pageY-this.canvas.offsetTop}
+    this.mouseX = e.pageX-this.canvas.offsetLeft; 
+    this.mouseY = e.pageY-this.canvas.offsetTop;
     if(this.mouseMove) this.mouseMove(e);
   }
   keyPressOriginal(e){
