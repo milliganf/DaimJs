@@ -8,6 +8,8 @@ class Daim{
     this.GREEN = "#00FF00";
     this.BLUE = "#0000FF";
     this.PURPLE = "#8800FF";
+    this.GRAY = "#888888";
+    this.GREY = "#888888";
     this.Image = class {
       constructor(element){
         this.element = element;
