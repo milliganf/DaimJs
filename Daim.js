@@ -38,6 +38,7 @@ class Daim{
     document.addEventListener("mousedown", (event) => {eg.mouseDownOriginal(event)});
     document.addEventListener("mouseup", (event) => {eg.mouseUpOriginal(event)});
     document.addEventListener("mousemove", (event) => {eg.mouseMoveOriginal(event)});
+    document.addEventListener("wheel", (event) => {eg.mouseWheelOriginal(event)});
   }
   monitorKeyboard(){
     let eg = this;
@@ -218,6 +219,9 @@ class Daim{
     this.mouseX = e.pageX-this.canvas.offsetLeft; 
     this.mouseY = e.pageY-this.canvas.offsetTop;
     if(this.mouseMove) this.mouseMove(e);
+  }
+  mouseWheelOriginal(e){
+    if(this.mouseWheel) this.mouseWheel(e);
   }
   keyPressOriginal(e){
     this.keyPressed = true;
