@@ -28,6 +28,7 @@ class Daim{
     this.ctx.fillStyle = this.BLACK;
     this.ctx.strokeStyle = this.BLACK;
     this.ctx.lineWidth = 1;
+    this.transformation = {x: 0, y: 0, rotation: 0, scaleX: 1, scaleY: 1};
     return this.canvas;
   }
   monitorMouse(){
@@ -196,6 +197,36 @@ class Daim{
   }
   setFill(fill){
     this.previousFill = fill;
+  }
+  translate(x, y){
+    this.ctx.translate(this.transformation.x, this.transformation.y);
+    this.transformation.x += x;
+    this.transformation.y += y;
+  }
+  setTranslation(x, y){
+    this.ctx.translate(x-this.transformation.x, y-this.transformation.y);
+    this.transformation.x = x;
+    this.transformation.y = y;
+  }
+  rotate(angle){
+    this.ctx.rotate(angle);
+    this.transformation.rotation += angle;
+  }
+  setRotation(angle){
+    this.ctx.rotate(-this.tranformation.rotation);
+    this.ctx.rotate(angle);
+    this.transformation.rotation = angle;
+  }
+  scale(x, y){
+    this.ctx.scale(x, y);
+    this.transformation.scaleX += x;
+    this.transformation.scaleY += y;
+  }
+  setScale(x,y){
+    this.ctx.scale(1/this.transformation.scaleX, 1/this.transformation.scaleY);
+    this.ctx.scale(x, y);
+    this.transformation.scaleX = x;
+    this.transformation.scaleY = y;
   }
   RGB(r, g, b){
     let hexNums = "0123456789ABCDEF".split("");
