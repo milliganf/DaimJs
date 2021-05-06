@@ -17,6 +17,26 @@ class Daim{
         this.height = element.height;
       }
     }
+    this.Sound = class {
+      constructor(element){
+        this.playing = false;
+        this.element = element;
+      }
+      play(){
+        this.element.play();
+        this.playing = true;
+      }
+      pause(){
+        this.element.pause();
+        this.playing = false;
+      }
+      getTime(){
+        return this.element.currentTime;
+      }
+      setTime(t){
+        this.element.currentTime = t;
+      }
+    }
     this.previousFill = false;
   }
   createCanvas(width = window.innerWidth, height = window.innerHeight){
@@ -185,6 +205,17 @@ class Daim{
       return;
     }
     this.ctx.drawImage(img, x, y, w, h);
+  }
+  createSound(src, onload){
+    let sound = document.createElement("audio");
+    sound.src = src;
+    sound.setAttribute("preload", "auto");
+    sound.setAttribute("controls", "none");
+    sound.style.display = "none";
+    document.body.appendChild(sound);
+    sound.addEventListener("canplaythrough", (e) => {
+      onload(new this.Sound(sound))
+    })
   }
   setFillColor(color){
     this.ctx.fillStyle = color;
