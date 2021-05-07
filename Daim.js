@@ -30,10 +30,10 @@ class Daim{
         this.element.pause();
         this.playing = false;
       }
-      getTime(){
-        return this.element.currentTime;
-      }
-      setTime(t){
+      time(t){
+        if(t === undefined){
+          return this.element.currentTime;
+        }
         this.element.currentTime = t;
       }
     }
@@ -158,12 +158,12 @@ class Daim{
   vertex(x, y){
     if(this.startedPath){
       this.ctx.lineTo(x, y);
-      this.startedPath = [x, y]
-    } else{
-      this.ctx.beginPath();
-      this.ctx.moveTo(x, y);
       this.startedPath = [x, y];
+      return;
     }
+    this.ctx.beginPath();
+    this.ctx.moveTo(x, y);
+    this.startedPath = [x, y];
   }
   arcVertex(start, end, radius){
     if(this.startedPath){
@@ -310,14 +310,14 @@ class Daim{
   start(rate){
     let time = Date.now();
     this.running = true;
-    if(rate != undefined){
-      this.interval = setInterval(() => {
-        let newTime = Date.now()
-        this.draw(newTime-time);
-        time = newTime;
-      }, rate);
-    } else{
+    if(rate === undefined){
       this.draw(0);
+      return;
     }
+    this.interval = setInterval(() => {
+      let newTime = Date.now()
+      this.draw(newTime-time);
+      time = newTime;
+    }, rate);
   }
 }
