@@ -38,6 +38,7 @@ class Daim{
       }
     }
     this.previousFill = false;
+    this.prevRounded = 0;
   }
   createCanvas(width = window.innerWidth, height = window.innerHeight){
     this.canvas = document.createElement("canvas");
@@ -96,6 +97,29 @@ class Daim{
     this.ctx.strokeStyle = color || this.ctx.strokeStyle;
     this.ctx.beginPath()
     this.ctx.rect(x, y, w, h);
+    this.ctx.stroke();
+  }
+  roundedRect(x, y, w, h, r, color, fill, lineWidth) {
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    if(r === undefined) r = this.prevRounded;
+    if(fill === undefined) fill = this.previousFill;
+    this.previousFill = fill;
+    this.prevRounded = r;
+    this.ctx.beginPath();
+    this.ctx.moveTo(x+r, y);
+    this.ctx.arcTo(x+w, y,   x+w, y+h, r);
+    this.ctx.arcTo(x+w, y+h, x,   y+h, r);
+    this.ctx.arcTo(x,   y+h, x,   y,   r);
+    this.ctx.arcTo(x,   y,   x+w, y,   r);
+    this.ctx.closePath();
+    if(fill){
+      this.ctx.fillStyle = color || this.ctx.fillStyle;
+      this.ctx.fill();
+      return;
+    }
+    this.ctx.lineWidth = lineWidth || this.ctx.lineWidth;
+    this.ctx.strokeStyle = color || this.ctx.strokeStyle;
     this.ctx.stroke();
   }
   text(t, x, y, size, color, fill, width, font){
