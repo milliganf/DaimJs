@@ -210,6 +210,30 @@ class Daim{
     this.ctx.lineWidth = w || this.ctx.lineWidth;
     this.ctx.stroke();
   }
+  polygon(x, y, sides, length, color, fill, w){
+    let pos = [x, y];
+    let angle = 0;
+    let angleInc = (Math.PI*2)/sides;
+    this.ctx.beginPath();
+    this.ctx.moveTo(pos[0], pos[1]);
+    for(let i = 0; i<sides; i++){
+      let newPos = [pos[0]+Math.cos(angle)*length, pos[1]+Math.sin(angle)*length];
+      this.ctx.lineTo(newPos[0], newPos[1]);
+      pos = newPos;
+      angle += angleInc;
+    }
+    this.ctx.closePath();
+    if(fill === undefined){fill = this.previousFill};
+    this.previousFill = fill;
+    if(fill){
+      this.ctx.fillStyle = color || this.ctx.fillStyle;
+      this.ctx.fill();
+      return;
+    }
+    this.ctx.strokeStyle = color || this.ctx.strokeStyle;
+    this.ctx.lineWidth = w || this.ctx.lineWidth;
+    this.ctx.stroke();
+  }
   linearGradient(x1, y1, w, h){
     return this.ctx.createLinearGradient(x1, y1, x1+w, y1+h);
   }
