@@ -135,6 +135,35 @@ class Daim{
     this.ctx.lineWidth = width || this.ctx.lineWidth;
     this.ctx.strokeText(t, x, y)
   }
+  wrapText(t, x, y, w, size, color, fill, width, font){
+    if(fill === undefined) fill = this.previousFill;
+    this.previousFill = fill;
+    this.ctx.font = `${size || this.ctx.font.split("p")[0]}px ${font || this.ctx.font.split(" ").slice(1)}`;
+    let writeType = "strokeText";
+    if(fill){
+      writeType = "fillText";
+      this.ctx.fillStyle = color || this.ctx.fillStyle;
+    } else{
+      this.ctx.strokeStyle = color || this.strokeStyle;
+      this.ctx.lineWidth = width || this.ctx.lineWidth;
+    }
+    let words = t.split(' ');
+    let line = '';
+    for(let n = 0; n < words.length; n++) {
+      let testLine = line + words[n] + ' ';
+      let metrics = this.ctx.measureText(testLine);
+      let testWidth = metrics.width;
+      if (testWidth > w && n > 0) {
+        this.ctx[writeType](line, x, y);
+        line = words[n] + ' ';
+        y += size;
+      }
+      else {
+        line = testLine;
+      }
+    }
+    this.ctx[writeType](line, x, y)
+  }
   point(x, y, color){
     this.ctx.fillStyle = color || this.ctx.fillStyle;
     this.ctx.fillRect(x, y, 1, 1);
