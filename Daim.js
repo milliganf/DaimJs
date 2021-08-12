@@ -283,6 +283,13 @@ class Daim{
     }
     this.ctx.drawImage(img, x, y, w, h);
   }
+  drawSprite(img, x, y, w, h, ix, iy, iw = w, ih = h){
+    let image = img;
+    if("element" in img){
+      image = img.element;
+    }
+    this.ctx.drawImage(image, x, y, w, h, ix, iy, iw, ih);
+  }
   createSound(src, onload){
     let sound = document.createElement("audio");
     sound.src = src;
