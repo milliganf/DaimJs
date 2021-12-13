@@ -297,7 +297,7 @@ class Daim{
     sound.setAttribute("controls", "none");
     sound.style.display = "none";
     document.body.appendChild(sound);
-    sound.addEventListener("canplaythrough", (e) => {
+    sound.addEventListener("loadeddata", (e) => {
       onload(new this.Sound(sound))
     })
   }
@@ -343,7 +343,10 @@ class Daim{
     this.transformation.scaleX = x;
     this.transformation.scaleY = y;
   }
-  RGB(r, g, b){
+  RGB(r, g=r, b=r){
+    r = Math.min(Math.max(0, r), 255);
+    g = Math.min(Math.max(0, g), 255);
+    b = Math.min(Math.max(0, b), 255);
     let hexNums = "0123456789ABCDEF".split("");
     let newR = parseInt(r);
     newR = newR.toString(16).length < 2 ? "0"+newR.toString(16) : newR.toString(16);
