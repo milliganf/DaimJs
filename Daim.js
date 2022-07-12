@@ -164,6 +164,27 @@ class Daim{
     }
     this.ctx[writeType](line, x, y)
   }
+  centerText(t, x, y, size, color, fill, width, font){
+    if(fill === undefined) fill = this.previousFill;
+    this.previousFill = fill;
+    this.ctx.font = `${size || this.ctx.font.split("p")[0]}px ${font || this.ctx.font.split(" ").slice(1)}`;
+    const bounds = this.ctx.measureText(t);
+    x -= bounds.width/2;
+    y += bounds.actualBoundingBoxAscent-(bounds.actualBoundingBoxAscent+bounds.actualBoundingBoxDescent)/2
+    if(fill){
+      this.ctx.fillStyle = color || this.ctx.fillStyle;
+      this.ctx.fillText(t, x, y);
+      return;
+    }
+    this.ctx.strokeStyle = color || this.strokeStyle;
+    this.ctx.lineWidth = width || this.ctx.lineWidth;
+    this.ctx.strokeText(t, x, y);
+  }
+  textBounds(t, size, font){
+    this.ctx.font = `${size || this.ctx.font.split("p")[0]}px ${font || this.ctx.font.split(" ").slice(1)}`;
+    const bounds = this.ctx.measureText(t);
+    return {width: bounds.width, height: bounds.actualBoundingBoxAscent+bounds.actualBoundingBoxDescent};
+  }
   point(x, y, color){
     this.ctx.fillStyle = color || this.ctx.fillStyle;
     this.ctx.fillRect(x, y, 1, 1);
