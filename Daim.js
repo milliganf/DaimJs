@@ -311,6 +311,12 @@ class Daim{
     }
     this.ctx.drawImage(image, x, y, w, h, ix, iy, iw, ih);
   }
+  drawCanvas(canvas, dX, dY, dW, dH, sX, sY, sW, sH){
+    this.ctx.drawImage(canvas, sX, sY, sW, sH, dX, dY, dW, dH);
+  }
+  drawDaim(daim, dX, dY, dW, dH, sX, sY, sW, sH){
+    this.drawCanvas(daim.canvas, dX, dY, dW, dH, sX, sY, sW, sH);
+  }
   createSound(src, onload){
     let sound = document.createElement("audio");
     sound.src = src;
